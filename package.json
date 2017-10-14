@@ -1,0 +1,19 @@
+{
+  "name": "lab-08-rest",
+  "version": "1.0.0",
+  "description": "Lab 8",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pmookerjee/lab-08-rest.git"
+  },
+  "author": "Paula Mookerjee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pmookerjee/lab-08-rest/issues"
+  },
+  "homepage": "https://github.com/Pmookerjee/lab-08-rest#readme"
+}
