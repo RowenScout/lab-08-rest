@@ -18,7 +18,7 @@
   _PATCH_ requires an id specified in request query. If no id, will send 400. If id is there, but no
   title or content, will send 400. If there is no match for the id, will also return a 400. Will update existing entry with the provided data.
 
-  _DELETE_ requires an id specified in request query. Will remove the corresponding entry from the Notes array. Returns a 204 No Content
+  _DELETE_ requires an id specified in request query. Will remove the corresponding entry from the Notes array. Returns a 204 No Content. If no id is given, will return a 400.
 
   *tests*
   run with `mocha`
