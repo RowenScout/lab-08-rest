@@ -2,9 +2,10 @@
   "name": "lab-08-rest",
   "version": "1.0.0",
   "description": "Lab 8",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "watch": "nodemon ./lib/_server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/Pmookerjee/lab-08-rest/issues"
   },
-  "homepage": "https://github.com/Pmookerjee/lab-08-rest#readme"
+  "homepage": "https://github.com/Pmookerjee/lab-08-rest#readme",
+  "devDependencies": {
+    "chance": "^1.0.11",
+    "dotenv": "^4.0.0"
+  },
+  "dependencies": {
+    "uuid": "^3.1.0"
+  }
 }
