@@ -5,28 +5,36 @@ const queryString = require('querystring');
 
 module.exports = (req) => {
 
-    return new Promise( (resolve, reject) => {
+  return new Promise( (resolve, reject) => {
 
-        // URL
-        req.url = url.parse(req.url);
-        req.url.query = queryString.parse(req.url.query);
+    req.url = url.parse(req.url);
+    req.url.query = queryString.parse(req.url.query);
 
-        if (! ( req.method === "PUT" || req.method === "POST" || req.method === "PATCH" ) ) {
-            resolve(req);
-        }
+    if (! ( req.method === 'PUT' || req.method === 'POST' || req.method === 'PATCH' ) ) {
+      resolve(req);
+    }
 
-        let text = "";
+    let text = '';
 
-        // Build up text as we read data
-        req.on("data", (buffer) => {
-        });
-
-        // JSONify it, if the request is for application/json
-        // Handle errors
-        req.on("end", (buffer) => {
-        });
-
-        req.on("error", reject);
+    req.on('data', (buffer) => {
+      text += buffer.toString();
     });
 
+    req.on('end', () => {
+
+      try{
+
+        if ( req.headers['content-type'] === 'application/json' ) {
+          req.body = JSON.parse(text);
+
+        }
+        resolve(req);
+      }
+      catch(err) {
+        reject(err);
+      }
+    });
+
+    req.on('error', reject);
+  });
 };

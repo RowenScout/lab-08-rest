@@ -1,32 +1,70 @@
 'use strict';
 
-const http = require("http");
-const router = require("./router");
-const note = require("../route/note");
+const http = require('http');
+const router = require('./route/router.js');
+const note = require('./note/routes.js');
 
-let isRunning = false;
+let serverUp = false;
 
-// Just get a server running
-const app = http.createServer( router.route );
+const server = http.createServer( router.routes );
 
 module.exports = {
-    start: () => {
-        return new Promise( (resolve, reject) => {
-          if(!isRunning){
-            //start server
-          }
-            // Handle error
-        })
-    },
 
-    stop: () => {
-        return new Promise( (resolve,reject) => {
-          if(isRunning){
-            //kill server
+  start: () => {
+    return new Promise( (resolve, reject) => {
+
+      if(! serverUp) {
+
+        server.listen(process.env.PORT, (err) => {
+
+          if(err) {
+
+            reject(err);
+
           }
-            // Handle error
-            // Check
+          else {
+
+            serverUp = true;
+            resolve(console.log(`server up on port : ${process.env.PORT}`));
+          }
         });
 
-    }
-}
+      } else {
+
+        reject(console.log('server is already up'));
+
+      }
+    });
+  },
+
+  stop: () => {
+
+    return new Promise( (resolve, reject) => {
+
+      if(! serverUp) {
+
+        reject(console.log('server is not running'));
+
+      }
+
+      else {
+
+        server.close( err => {
+
+          if(err) {
+
+            reject(err);
+
+          }
+
+          else {
+
+            serverUp = false;
+            resolve(console.log('shutting down server'));
+
+          }
+        });
+      }
+    });
+  },
+};

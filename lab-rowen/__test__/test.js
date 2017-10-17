@@ -1,20 +1,55 @@
+/*global beforeAll,afterAll,expect*/
 'use strict';
 
-const jest = require('jest');
-const server = require('../lib/server');
-const agent = require('superagent');
+process.env.PORT = 5500;
+const server = require("../lib/server");
+const superagent = require("superagent");
 
-test('should respond with a 400 if I don\'t send a title', () => {
-  return agent.post('http//localhost:5500/api/notes')
-  .set('Content-Type', 'applicaton/json')
-  .send({
-    title:'hello world',
-    content: 'first note test'
-  })
-  .then(res => {
-    expect(res.status).toEqual(200);
-    //other test criteria
-    //other test criteria
-    
-  })
-})
+describe("api/notes", function() {
+
+    beforeAll(server.start);
+    afterAll(server.stop);
+
+    describe("POST /api/notes", () => {
+
+        test('should respond with a 200', () =>{
+           return superagent.post('http://localhost:5500/api/notes')
+            .set("Content-Type", "application/json")
+            .send({
+                title:"hello world",
+                content: "this is my first note"
+            })
+            .then(res=>{
+                expect(res.status).toEqual(200);
+                expect(res.body.title).toEqual('hello world');
+                expect(res.body.content).toEqual('this is my first note');
+            })
+        });
+
+        test('should respond with a 400', () =>{
+           return superagent.post('http://localhost:5500/api/notes')
+            .set("Content-Type", "application/json")
+            .send({
+                content: "this is my first note"
+            })
+            .then(Promise.reject)
+            .catch(res=>{
+                expect(res.status).toEqual(400);
+            })
+        });
+
+        test('should respond with a 400', () =>{
+           return superagent.post('http://localhost:5500/api/notes')
+            .set("Content-Type", "application/json")
+            .send({
+                title: "my title"
+            })
+            .then(Promise.reject)
+            .catch(res=>{
+                expect(res.status).toEqual(400);
+            })
+        });
+
+    });
+
+});
