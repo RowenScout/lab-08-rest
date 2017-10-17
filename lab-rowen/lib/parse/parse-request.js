@@ -15,21 +15,21 @@ module.exports = (req) => {
     }
 
     let text = '';
-
     req.on('data', (buffer) => {
       text += buffer.toString();
+
     });
 
     req.on('end', () => {
 
       try{
-
         if ( req.headers['content-type'] === 'application/json' ) {
           req.body = JSON.parse(text);
-
         }
+
         resolve(req);
       }
+
       catch(err) {
         reject(err);
       }
@@ -37,4 +37,5 @@ module.exports = (req) => {
 
     req.on('error', reject);
   });
+
 };

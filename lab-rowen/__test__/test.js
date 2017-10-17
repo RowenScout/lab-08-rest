@@ -1,23 +1,27 @@
 /*global beforeAll,afterAll,expect*/
+
+// John's test from the demo code, except with single quotes.
+// https://github.com/codefellows/seattle-javascript-401n4/tree/master/backend/08-rest/demos/RESTserver/test
+
 'use strict';
 
 process.env.PORT = 5500;
-const server = require("../lib/server");
-const superagent = require("superagent");
+const server = require('../lib/server');
+const superagent = require('superagent');
 
-describe("api/notes", function() {
+describe('api/notes', function() {
 
     beforeAll(server.start);
     afterAll(server.stop);
 
-    describe("POST /api/notes", () => {
+    describe('POST /api/notes', () => {
 
         test('should respond with a 200', () =>{
            return superagent.post('http://localhost:5500/api/notes')
-            .set("Content-Type", "application/json")
+            .set('Content-Type', 'application/json')
             .send({
-                title:"hello world",
-                content: "this is my first note"
+                title:'hello world',
+                content: 'this is my first note'
             })
             .then(res=>{
                 expect(res.status).toEqual(200);
@@ -28,9 +32,9 @@ describe("api/notes", function() {
 
         test('should respond with a 400', () =>{
            return superagent.post('http://localhost:5500/api/notes')
-            .set("Content-Type", "application/json")
+            .set('Content-Type', 'application/json')
             .send({
-                content: "this is my first note"
+                content: 'this is my first note'
             })
             .then(Promise.reject)
             .catch(res=>{
@@ -40,9 +44,9 @@ describe("api/notes", function() {
 
         test('should respond with a 400', () =>{
            return superagent.post('http://localhost:5500/api/notes')
-            .set("Content-Type", "application/json")
+            .set('Content-Type', 'application/json')
             .send({
-                title: "my title"
+                title: 'my title'
             })
             .then(Promise.reject)
             .catch(res=>{
