@@ -6,7 +6,7 @@
 'use strict';
 
 process.env.PORT = 5500;
-const server = require('../lib/server');
+const server = require('../lib/server/server.js');
 const superagent = require('superagent');
 
 describe('api/notes', function() {
